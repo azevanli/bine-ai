@@ -138,9 +138,9 @@
         chatContainer.appendChild(loadingMsg);
         chatContainer.scrollTop = chatContainer.scrollHeight;
 
-        // 3. Send Prompt to your Python Backend Server
+        // 3. Send Prompt to your Live Render Python Backend Server
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/synthesize', {
+            const response = await fetch('https://bine-backend.onrender.com/api/synthesize', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ prompt: query })
@@ -171,7 +171,7 @@
             const loader = document.getElementById(loadingId);
             if (loader) loader.remove();
 
-            alert('Backend Error: Make sure main.py is running in terminal and your API key in .env is valid!');
+            alert('Backend Error: Could not connect to Render backend!');
         }
     }
 
@@ -183,3 +183,5 @@
         }
     });
 </script>
+</body>
+</html>
