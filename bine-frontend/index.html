@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Bine AI - Multi-Model Synthesis</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen relative overflow-x-hidden antialiased selection:bg-blue-600 selection:text-white bg-[#070a12] text-slate-100">
+
+    <!-- Ambient Glow Layer -->
+    <div class="ambient-glow"></div>
+
+    <!-- DeepSeek Particle Constellation Backdrop Canvas -->
+    <canvas id="bgCanvas"></canvas>
+
+    <!-- FLOATING TOP BAR (MORPHS TO SQUIRCLE ON SCROLL) -->
+    <div class="sticky top-0 left-0 right-0 z-40 flex justify-center pt-3 px-4 transition-all duration-500" id="headerWrapper">
+        <header id="topBar" class="w-full max-w-7xl flex justify-between items-center px-6 py-3.5 transition-all duration-500 border border-transparent rounded-2xl bg-transparent">
+            <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-xl bg-blue-600 flex items-center justify-center font-bold text-white text-sm shadow-md">B</div>
+                <span class="font-bold tracking-tight text-slate-100 text-base">Bine AI</span>
+            </div>
+
+            <!-- Top Nav Links -->
+            <nav class="hidden md:flex items-center gap-6 text-xs text-slate-300 font-medium">
+                <a href="#features" class="hover:text-blue-400 transition-colors">Features</a>
+                <a href="#models" class="hover:text-blue-400 transition-colors">Supported AI</a>
+                <a href="#about" class="hover:text-blue-400 transition-colors">Consensus Engine</a>
+            </nav>
+
+            <div class="flex items-center gap-3">
+                <a href="https://github.com" target="_blank" class="text-xs text-slate-400 hover:text-slate-200 transition-colors flex items-center gap-1.5 bg-slate-900/80 border border-slate-800 px-3.5 py-1.5 rounded-full backdrop-blur-md">
+                    <i data-lucide="github" class="w-3.5 h-3.5"></i>
+                    <span class="hidden sm:inline">Open Source</span>
+                </a>
+                <button onclick="openModal()" class="text-xs font-medium text-white bg-blue-600 hover:bg-blue-500 px-4 py-1.5 rounded-full transition-all shadow-md">
+                    Launch App
+                </button>
+            </div>
+        </header>
+    </div>
+
+    <!-- MAIN HOMEPAGE CONTENT -->
+    <div class="relative z-10 flex flex-col items-center">
+
+        <!-- HERO SECTION -->
+        <main class="min-h-[80vh] flex flex-col items-center justify-center text-center max-w-4xl px-6 pt-16 pb-24">
+            <h1 class="text-6xl sm:text-7xl md:text-8xl font-black tracking-tight text-white mb-6 leading-tight">
+                Bine AI
+            </h1>
+            <p class="text-lg sm:text-2xl text-slate-300 max-w-2xl mb-10 font-normal leading-relaxed">
+                Select from multiple AI chatbots to synthesize the ultimate response.
+            </p>
+            <button onclick="openModal()" class="group relative px-8 py-3.5 rounded-xl bg-slate-900/90 border border-slate-700/80 hover:border-blue-500/80 text-slate-100 font-medium text-base transition-all duration-300 shadow-xl hover:bg-slate-800 backdrop-blur-md flex items-center gap-2.5">
+                <span>Explore Bine</span>
+                <i data-lucide="arrow-right" class="w-4 h-4 text-slate-400 group-hover:text-blue-400 group-hover:translate-x-1 transition-all"></i>
+            </button>
+        </main>
+
+        <!-- FEATURES SECTION -->
+        <section id="features" class="w-full max-w-6xl px-6 py-24 border-t border-slate-800/60">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold text-slate-100 mb-4">Multi-LLM Fusion Engine</h2>
+                <p class="text-sm sm:text-base text-slate-400 max-w-lg mx-auto">Querying top models simultaneously and combining facts, code accuracy, and layout into one output.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="p-6 sm:p-8 rounded-2xl bg-slate-900/80 border border-slate-800/90 backdrop-blur-xl hover:border-slate-700 transition-all">
+                    <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center mb-5">
+                        <i data-lucide="layers" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-slate-200 mb-2">Parallel Execution</h3>
+                    <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">Dispatches your prompt simultaneously to ChatGPT (GPT-4o), Claude 3.5 Sonnet, and Gemini 1.5 Pro.</p>
+                </div>
+
+                <div class="p-6 sm:p-8 rounded-2xl bg-slate-900/80 border border-slate-800/90 backdrop-blur-xl hover:border-slate-700 transition-all">
+                    <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center mb-5">
+                        <i data-lucide="cpu" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-slate-200 mb-2">Consensus Scoring</h3>
+                    <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">Cross-checks factual assertions across multiple models to filter out unverified claims and hallucinations.</p>
+                </div>
+
+                <div class="p-6 sm:p-8 rounded-2xl bg-slate-900/80 border border-slate-800/90 backdrop-blur-xl hover:border-slate-700 transition-all">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-5">
+                        <i data-lucide="sparkles" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-slate-200 mb-2">Output Merging</h3>
+                    <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">Splices together the strongest sections into a clean, unified answer with high information density.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXTENDED FOOTER -->
+        <footer class="w-full border-t border-slate-800/80 bg-slate-950/90 backdrop-blur-2xl py-16 px-6 mt-12">
+            <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
+                <div class="col-span-2">
+                    <div class="flex items-center gap-2.5 mb-4">
+                        <div class="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center font-bold text-white text-xs">B</div>
+                        <span class="font-bold text-slate-100 text-lg">Bine AI</span>
+                    </div>
+                    <p class="text-xs text-slate-400 max-w-sm leading-relaxed mb-4">
+                        Synthesizing multiple artificial intelligence models to eliminate hallucinations and deliver cohesive master outputs.
+                    </p>
+                    <p class="text-[11px] text-slate-500">© 2026 Bine AI Technologies Inc.</p>
+                </div>
+
+                <div>
+                    <h4 class="text-xs font-semibold text-slate-200 uppercase tracking-wider mb-4">Product</h4>
+                    <ul class="space-y-2.5 text-xs text-slate-400">
+                        <li><a href="#" class="hover:text-slate-200 transition-colors">Consensus Engine</a></li>
+                        <li><a href="#" class="hover:text-slate-200 transition-colors">Supported Models</a></li>
+                        <li><a href="#" class="hover:text-slate-200 transition-colors">API Gateway</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-xs font-semibold text-slate-200 uppercase tracking-wider mb-4">Resources</h4>
+                    <ul class="space-y-2.5 text-xs text-slate-400">
+                        <li><a href="#" class="hover:text-slate-200 transition-colors">Documentation</a></li>
+                        <li><a href="#" class="hover:text-slate-200 transition-colors">GitHub Repository</a></li>
+                        <li><a href="#" class="hover:text-slate-200 transition-colors">Benchmarks</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-xs font-semibold text-slate-200 uppercase tracking-wider mb-4">Company</h4>
+                    <ul class="space-y-2.5 text-xs text-slate-400">
+                        <li><a href="#" class="hover:text-slate-200 transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-slate-200 transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-slate-200 transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="max-w-6xl mx-auto pt-8 border-t border-slate-800/60 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-500">
+                <p>Designed for optimal multi-model prompting and response synthesis.</p>
+                <div class="flex gap-4">
+                    <a href="#" class="hover:text-slate-400"><i data-lucide="twitter" class="w-4 h-4"></i></a>
+                    <a href="#" class="hover:text-slate-400"><i data-lucide="github" class="w-4 h-4"></i></a>
+                </div>
+            </div>
+        </footer>
+
+        <!-- FIXED BOTTOM QUICK BAR -->
+        <div class="fixed bottom-4 left-1/2 -translate-x-1/2 z-30 bg-slate-900/90 border border-slate-800/90 rounded-full px-5 py-2.5 backdrop-blur-xl shadow-2xl flex items-center gap-4 text-xs text-slate-300">
+            <span class="hidden sm:inline">Combine GPT-4, Claude & Gemini into one output</span>
+            <button onclick="openModal()" class="bg-blue-600 hover:bg-blue-500 text-white font-medium px-4 py-1.5 rounded-full transition-colors flex items-center gap-1.5">
+                <span>Explore Bine</span>
+                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+            </button>
+        </div>
+
+    </div>
+
+    <!-- ONBOARDING MODAL (DISMISSIBLE BY CLICKING EMPTY BACKDROP SPACE) -->
+    <div id="useCaseModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
+
+        <!-- Empty Space Backdrop Overlay (Clicking returns to home) -->
+        <div id="bgDismissOverlay" onclick="closeModal()" class="absolute inset-0 bg-slate-950/80 backdrop-blur-md cursor-pointer"></div>
+
+        <!-- Modal Content Box -->
+        <div id="modalCard" class="relative z-10 bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-lg p-6 sm:p-8 shadow-2xl transform scale-95 transition-transform duration-300">
+
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-200 p-1.5 rounded-lg hover:bg-slate-800 transition-colors">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+
+            <div class="mb-6 text-center sm:text-left">
+                <h3 class="text-xl font-bold text-slate-100 mb-2">What do you plan to use Bine AI for?</h3>
+                <p class="text-xs sm:text-sm text-slate-400">Select one or more workflows to customize your AI setup.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+                <button class="usecase-card border border-slate-800 bg-slate-950/60 hover:bg-slate-800/60 p-3.5 rounded-xl flex items-center gap-3 text-left transition-all">
+                    <div class="p-2 rounded-lg bg-blue-500/10 text-blue-400"><i data-lucide="code" class="w-4 h-4"></i></div>
+                    <div>
+                        <div class="text-sm font-medium text-slate-200">Coding & Tech</div>
+                        <div class="text-xs text-slate-500">Debugging & architecture</div>
+                    </div>
+                </button>
+                <button class="usecase-card border border-slate-800 bg-slate-950/60 hover:bg-slate-800/60 p-3.5 rounded-xl flex items-center gap-3 text-left transition-all">
+                    <div class="p-2 rounded-lg bg-purple-500/10 text-purple-400"><i data-lucide="file-text" class="w-4 h-4"></i></div>
+                    <div>
+                        <div class="text-sm font-medium text-slate-200">Drafting Essays</div>
+                        <div class="text-xs text-slate-500">Articles & copy</div>
+                    </div>
+                </button>
+            </div>
+
+            <button onclick="window.location.href='workspace.html'" class="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-500 font-medium text-sm text-white transition-all shadow-lg flex items-center justify-center gap-2">
+                <span>Continue to Workspace</span>
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+            </button>
+        </div>
+    </div>
+
+    <script src="canvas.js"></script>
+    <script>
+        lucide.createIcons();
+
+        // Scroll squircle header morphing
+        const topBar = document.getElementById('topBar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 40) {
+                topBar.classList.add('max-w-3xl', 'bg-slate-900/80', 'border-slate-800', 'backdrop-blur-xl', 'rounded-full', 'shadow-2xl');
+                topBar.classList.remove('max-w-7xl', 'bg-transparent', 'border-transparent', 'rounded-2xl');
+            } else {
+                topBar.classList.remove('max-w-3xl', 'bg-slate-900/80', 'border-slate-800', 'backdrop-blur-xl', 'rounded-full', 'shadow-2xl');
+                topBar.classList.add('max-w-7xl', 'bg-transparent', 'border-transparent', 'rounded-2xl');
+            }
+        });
+
+        // Modal Controls
+        const modal = document.getElementById('useCaseModal');
+        const modalCard = document.getElementById('modalCard');
+
+        function openModal() {
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modalCard.classList.remove('scale-95');
+            modalCard.classList.add('scale-100');
+        }
+
+        function closeModal() {
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modalCard.classList.remove('scale-100');
+            modalCard.classList.add('scale-95');
+        }
+
+        document.querySelectorAll('.usecase-card').forEach(card => {
+            card.addEventListener('click', () => {
+                card.classList.toggle('border-blue-500');
+                card.classList.toggle('bg-blue-500/10');
+            });
+        });
+    </script>
+</body>
+</html>

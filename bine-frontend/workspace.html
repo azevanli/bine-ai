@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full overflow-hidden">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Bine AI - Workspace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="h-full w-full bg-slate-950 text-slate-100 flex flex-col antialiased">
+
+    <div class="h-full w-full flex overflow-hidden">
+
+        <!-- Left Sidebar Navigation -->
+        <aside class="w-64 border-r border-slate-800/80 bg-slate-900/90 flex flex-col justify-between hidden md:flex shrink-0">
+            <div class="p-4 flex flex-col h-full overflow-hidden">
+
+                <!-- Pressable Workspace Button -> Redirects to Homepage -->
+                <a href="index.html" class="flex items-center justify-between p-2.5 rounded-xl border border-slate-800 bg-slate-950/80 hover:bg-slate-800 transition-all mb-5 group">
+                    <div class="flex items-center gap-2">
+                        <div class="w-6 h-6 rounded bg-blue-600 flex items-center justify-center font-bold text-white text-xs">B</div>
+                        <span class="font-semibold text-xs text-slate-200 group-hover:text-blue-400 transition-colors">Bine AI Workspace</span>
+                    </div>
+                    <i data-lucide="home" class="w-3.5 h-3.5 text-slate-500 group-hover:text-blue-400 transition-colors"></i>
+                </a>
+
+                <!-- New Chat Button -->
+                <button class="w-full py-2.5 px-3 rounded-xl border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-200 text-xs font-medium flex items-center justify-start gap-2 mb-6 transition-all">
+                    <i data-lucide="plus" class="w-4 h-4 text-blue-400"></i>
+                    <span>New Synthesis Chat</span>
+                </button>
+
+                <!-- Active AI Selector -->
+                <div class="mb-6">
+                    <div class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-2.5 px-1">Active AI Sources</div>
+                    <div class="space-y-1.5">
+                        <label class="flex items-center justify-between p-2 rounded-lg bg-slate-950/60 border border-slate-800/80 text-xs text-slate-300 cursor-pointer">
+                            <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-emerald-400"></span> ChatGPT (GPT-4o)</span>
+                            <input type="checkbox" checked class="rounded border-slate-700 bg-slate-900 text-blue-600 focus:ring-0">
+                        </label>
+                        <label class="flex items-center justify-between p-2 rounded-lg bg-slate-950/60 border border-slate-800/80 text-xs text-slate-300 cursor-pointer">
+                            <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-orange-400"></span> Claude 3.5 Sonnet</span>
+                            <input type="checkbox" checked class="rounded border-slate-700 bg-slate-900 text-blue-600 focus:ring-0">
+                        </label>
+                        <label class="flex items-center justify-between p-2 rounded-lg bg-slate-950/60 border border-slate-800/80 text-xs text-slate-300 cursor-pointer">
+                            <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-blue-400"></span> Gemini 1.5 Pro</span>
+                            <input type="checkbox" checked class="rounded border-slate-700 bg-slate-900 text-blue-600 focus:ring-0">
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Chat History Section -->
+                <div class="flex-1 overflow-y-auto custom-scroll pr-1">
+                    <div class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-2 px-1">Recent Chats</div>
+                    <div class="space-y-1">
+                        <button class="w-full text-left px-2.5 py-2 rounded-lg bg-slate-800/50 text-slate-200 text-xs truncate flex items-center gap-2">
+                            <i data-lucide="message-square" class="w-3.5 h-3.5 text-slate-400 shrink-0"></i>
+                            <span class="truncate">Code Refactoring & Optimization</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Footer -->
+            <div class="p-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+                <div class="flex items-center gap-2">
+                    <div class="w-6 h-6 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center font-medium text-slate-300">U</div>
+                    <span class="font-medium text-slate-300">User Session</span>
+                </div>
+                <a href="index.html" class="p-1 hover:text-slate-200" title="Back to Homepage"><i data-lucide="home" class="w-4 h-4"></i></a>
+            </div>
+        </aside>
+
+        <!-- Main Chat Area -->
+        <main class="flex-1 flex flex-col h-full relative overflow-hidden bg-slate-950">
+
+            <div id="chatContainer" class="flex-1 overflow-y-auto custom-scroll p-4 sm:p-6 space-y-6 max-w-4xl w-full mx-auto pb-32">
+                <div id="welcomeState" class="flex flex-col items-center justify-center h-full text-center my-auto py-16">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-600/10 border border-blue-500/20 text-blue-400 flex items-center justify-center mb-4">
+                        <i data-lucide="layers" class="w-6 h-6"></i>
+                    </div>
+                    <h2 class="text-xl font-bold text-slate-100 mb-2">Ready to synthesize outputs</h2>
+                    <p class="text-xs sm:text-sm text-slate-400 max-w-md mb-8">Type a question below. Bine AI queries ChatGPT, Claude, and Gemini simultaneously.</p>
+                </div>
+            </div>
+
+            <!-- Fixed Bottom Chat Bar -->
+            <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent">
+                <div class="max-w-3xl mx-auto">
+                    <div class="relative bg-slate-900 border border-slate-800/90 rounded-2xl shadow-xl">
+                        <textarea id="chatInput" rows="1" placeholder="Ask Bine AI to synthesize anything..." class="w-full bg-transparent text-slate-200 text-sm px-4 py-3.5 pr-12 focus:outline-none resize-none custom-scroll max-h-32"></textarea>
+                        <button id="sendBtn" class="absolute right-2.5 bottom-2.5 p-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl transition-all">
+                            <i data-lucide="send" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+    lucide.createIcons();
+
+    const sendBtn = document.getElementById('sendBtn');
+    const chatInput = document.getElementById('chatInput');
+    const chatContainer = document.getElementById('chatContainer');
+    const welcomeState = document.getElementById('welcomeState');
+
+    async function handleSend() {
+        const query = chatInput.value.trim();
+        if (!query) return;
+
+        // Remove welcome empty state
+        if (welcomeState) welcomeState.remove();
+
+        // 1. Render User Question
+        const userMsg = document.createElement('div');
+        userMsg.className = 'flex justify-end';
+        userMsg.innerHTML = `<div class="max-w-2xl rounded-2xl px-4 py-3 text-xs sm:text-sm bg-blue-600 text-white rounded-br-none">${query}</div>`;
+        chatContainer.appendChild(userMsg);
+
+        chatInput.value = '';
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+
+        // 2. Render Loading State Indicator
+        const loadingId = 'load-' + Date.now();
+        const loadingMsg = document.createElement('div');
+        loadingMsg.id = loadingId;
+        loadingMsg.className = 'flex justify-start';
+        loadingMsg.innerHTML = `
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl px-4 py-3 text-xs text-slate-400 flex items-center gap-3">
+                <div class="w-2 h-2 rounded-full bg-blue-500 animate-ping"></div>
+                <span>Querying ChatGPT, Claude & Gemini... synthesizing optimal response</span>
+            </div>
+        `;
+        chatContainer.appendChild(loadingMsg);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+
+        // 3. Send Prompt to your Python Backend Server
+        try {
+            const response = await fetch('http://127.0.0.1:8000/api/synthesize', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ prompt: query })
+            });
+
+            const data = await response.json();
+
+            // Remove Loading Indicator
+            const loader = document.getElementById(loadingId);
+            if (loader) loader.remove();
+
+            // 4. Render Live Synthesized AI Response
+            const resMsg = document.createElement('div');
+            resMsg.className = 'flex justify-start max-w-3xl';
+            resMsg.innerHTML = `
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 text-slate-200 text-xs sm:text-sm space-y-3">
+                    <div class="flex items-center gap-2">
+                        <span class="px-2 py-0.5 rounded bg-blue-500/10 border border-blue-500/30 text-blue-400 font-semibold text-[11px]">Bine Synthesis</span>
+                        <span class="text-[10px] text-slate-500">Live Models Blended</span>
+                    </div>
+                    <div class="whitespace-pre-wrap leading-relaxed">${data.synthesized}</div>
+                </div>
+            `;
+            chatContainer.appendChild(resMsg);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+
+        } catch (err) {
+            const loader = document.getElementById(loadingId);
+            if (loader) loader.remove();
+
+            alert('Backend Error: Make sure main.py is running in terminal and your API key in .env is valid!');
+        }
+    }
+
+    sendBtn.addEventListener('click', handleSend);
+    chatInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handleSend();
+        }
+    });
+</script>
