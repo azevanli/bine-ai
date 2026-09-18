@@ -2,29 +2,23 @@
 
 import React, { useEffect, useRef } from "react";
 
-export interface LiquidMetalButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface LiquidMetalButtonProps {
   label?: string;
   onClick?: () => void;
-  viewMode?: "text" | "icon";
   className?: string;
 }
 
 export function LiquidMetalButton({
   label = "Explore Bine",
   onClick,
-  viewMode = "text",
   className = "",
-  ...props
 }: LiquidMetalButtonProps) {
   const shaderRef = useRef<HTMLDivElement>(null);
-  const shaderMount = useRef<{
-    destroy: () => void;
-  } | null>(null);
+  const shaderMount = useRef<{ destroy?: () => void } | null>(null);
 
   useEffect(() => {
     const styleId = "liquid-metal-button-styles";
-    if (!import.meta && !document.getElementById(styleId)) {
+    if (!document.getElementById(styleId)) {
       const style = document.createElement("style");
       style.id = styleId;
       style.textContent = `
@@ -41,74 +35,4 @@ export function LiquidMetalButton({
           filter: hue-rotate(280deg) saturate(1.8) brightness(1.1) !important;
         }
       `;
-      document.head.appendChild(style);
-    }
-
-    const loadShader = async () => {
-      try {
-        const { liquidMetalFragmentShader, ShaderMount } = await import(
-          "@paper-design/shaders"
-        );
-        if (shaderRef.current) {
-          if (shaderMount.current?.destroy) {
-            shaderMount.current.destroy();
-          }
-          shaderMount.current = new ShaderMount(
-            shaderRef.current,
-            liquidMetalFragmentShader,
-            {
-              u_repetition: 4,
-              u_softness: 0.5,
-              u_shiftRed: 0.6,
-              u_shiftBlue: 0.9,
-              u_distortion: 0.2,
-              u_contour: 0.1,
-              u_angle: 45,
-              u_scale: 8,
-              u_shape: 1,
-              u_offsetX: 0.1,
-              u_offsetY: -0.1,
-            },
-            undefined,
-            0.6
-          );
-        }
-      } catch (error) {
-        console.error("[Bine AI] Failed to load shader:", error);
-      }
-    };
-
-    loadShader();
-
-    return () => {
-      if (shaderMount.current?.destroy) {
-        shaderMount.current.destroy();
-      }
-    };
-  }, []);
-
-  return (
-    <button
-      onClick={onClick}
-      className={`relative inline-flex items-center justify-center overflow-hidden rounded-full px-8 py-3.5 text-sm font-semibold text-white transition-all hover:scale-105 shadow-xl hover:shadow-pink-500/30 group ${className}`}
-      ...props
-    >
-      <div
-        ref={shaderRef}
-        className="shader-container-exploded absolute inset-0 z-0 bg-gradient-to-r from-slate-900 via-pink-950 to-slate-900"
-      />
-      <span className="relative z-10 flex items-center gap-2">
-        <span>{label}</span>
-        <svg
-          className="w-4 h-4 transition-transform group-hover:translate-x-1 text-pink-300"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          viewBox="0 0 24 24"
-        >
-          <path d="M5 12h14M12 5l7 7-7 7" />
-        </svg>
-      </span>
-    </button>
-  );
-}
+      document.head.appendChi‡7G–ÆR“°¢Ð ¢6öç7BÆöE6†FW"Ò7–æ2‚’Óâ°¢G'’°¢6öç7B²Æ—V–DÖWFÄg&vÖVçE6†FW"Â6†FW$Ö÷VçBÒÒv—B–×÷'B€¢$W"ÖFW6–vâ÷6†FW'2 ¢“°¢–b‡6†FW%&Vbæ7W'&VçB’°¢–b‡6†FW$Ö÷VçBæ7W'&VçCòæFW7G&÷’’°¢6†FW$Ö÷VçBæ7W'&VçBæFW7G&÷’‚“°¢Ð¢6†FW$Ö÷VçBæ7W'&VçBÒæWr6†FW$Ö÷VçB€¢6†FW%&Vbæ7W'&VçBÀ¢Æ—V–DÖWFÄg&vÖVçE6†FW"À¢°¢U÷&WWF—F–öã¢BÀ¢U÷6ögFæW73¢ãRÀ¢U÷6†–gE&VC¢ãbÀ¢U÷6†–gD&ÇVS¢ã’À¢UöF—7F÷'F–öã¢ã"À¢Uö6öçF÷W#¢ãÀ¢UöævÆS¢CRÀ¢U÷66ÆS¢‚À¢U÷6†S¢À¢Uööfg6WEƒ¢ãÀ¢Uööfg6WE“¢ÓãÀ¢ÒÀ¢VæFVf–æVBÀ¢ã`¢“°¢Ð¢Ò6F6‚†W'&÷"’°¢6öç7B–væ÷&TW'&÷"ÒW'&÷#°¢Ð¢Ó° ¢ÆöE6†FW"‚“° ¢&WGW&â‚’Óâ°¢–b‡6†FW$Ö÷VçBæ7W'&VçCòæFW7G&÷’’°¢6†FW$Ö÷VçBæ7W'&VçBæFW7G&÷’‚“°¢Ð¢Ó°¢ÒÂµÒ“° ¢&WGW&â€¢Æ'WGFöà¢öä6Æ–6³×¶öä6Æ–6·Ð¢6Æ74æÖS×&VÆF—fR–æÆ–æRÖfÆW‚—FV×2Ö6VçFW"§W7F–g’Ö6VçFW"÷fW&fÆ÷rÖ†–FFVâ&÷VæFVBÖgVÆÂ‚Ó‚’Ó2ãRFW‡B×6ÒföçB×6VÖ–&öÆBFW‡B×v†—FRG&ç6—F–öâÖÆÂ†÷fW#§66ÆRÓR6†F÷r×†Â†÷fW#§6†F÷r×–æ²ÓSó3w&÷WG¶6Æ74æÖWÖà¢à¢ÆF—b&Vc×·6†FW%&VgÒ6Æ74æÖSÒ'6†FW"Ö6öçF–æW"ÖW‡ÆöFVB'6öÇWFR–ç6WBÓ¢Ó&rÖw&F–VçB×Fò×"g&öÒ×6ÆFRÓ“f–×–æ²Ó“SFò×6ÆFRÓ“"óà¢Ç7â6Æ74æÖSÒ'&VÆF—fR¢ÓfÆW‚—FV×2Ö6VçFW"vÓ"#à¢Ç7ãç¶Æ&VÇÓÂ÷7ãà¢Ç7fp¢6Æ74æÖSÒ'rÓB‚ÓBG&ç6—F–öâ×G&ç6f÷&Òw&÷WÖ†÷fW#§G&ç6ÆFR×‚ÓFW‡B×–æ²Ó3 ¢f–ÆÃÒ&æöæR ¢7G&ö¶SÒ&7W'&VçD6öÆ÷" ¢7G&ö¶Uv–GFƒÒ#" ¢f–Wt&÷ƒÒ##B#B ¢à¢ÇF‚CÒ$ÓR&ƒDÓ"VÃrrÓrr"óà¢Â÷7fsà¢Â÷7ãà¢Âö'WGFöãà¢“°§Ð
